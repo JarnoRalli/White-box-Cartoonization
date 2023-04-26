@@ -1,0 +1,17 @@
+name: whiteboxcartoon
+channels:
+    - menpo
+    - conda-forge
+    - anaconda
+    - pytorch
+    - nvidia
+dependencies:
+    - python=3.6
+    - tensorflow-gpu==1.12.0
+    - pip
+    - pip:
+        - opencv-python
+        - scikit-image==0.14.5
+
+
+

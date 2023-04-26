@@ -7,7 +7,6 @@ import guided_filter
 from tqdm import tqdm
 
 
-
 def resize_crop(image):
     h, w, c = np.shape(image)
     if min(h, w) > 720:
@@ -20,7 +19,7 @@ def resize_crop(image):
     h, w = (h//8)*8, (w//8)*8
     image = image[:h, :w, :]
     return image
-    
+
 
 def cartoonize(load_folder, save_folder, model_path):
     input_photo = tf.placeholder(tf.float32, [1, None, None, 3])
@@ -30,7 +29,7 @@ def cartoonize(load_folder, save_folder, model_path):
     all_vars = tf.trainable_variables()
     gene_vars = [var for var in all_vars if 'generator' in var.name]
     saver = tf.train.Saver(var_list=gene_vars)
-    
+
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     sess = tf.Session(config=config)
@@ -43,18 +42,17 @@ def cartoonize(load_folder, save_folder, model_path):
             load_path = os.path.join(load_folder, name)
             save_path = os.path.join(save_folder, name)
             image = cv2.imread(load_path)
+            image_shape = image.shape
             image = resize_crop(image)
             batch_image = image.astype(np.float32)/127.5 - 1
             batch_image = np.expand_dims(batch_image, axis=0)
             output = sess.run(final_out, feed_dict={input_photo: batch_image})
             output = (np.squeeze(output)+1)*127.5
             output = np.clip(output, 0, 255).astype(np.uint8)
+            output = cv2.resize(output, (image_shape[1], image_shape[0]))
             cv2.imwrite(save_path, output)
         except:
             print('cartoonize {} failed'.format(load_path))
-
-
-    
 
 if __name__ == '__main__':
     model_path = 'saved_models'
@@ -63,6 +61,4 @@ if __name__ == '__main__':
     if not os.path.exists(save_folder):
         os.mkdir(save_folder)
     cartoonize(load_folder, save_folder, model_path)
-    
 
-    
