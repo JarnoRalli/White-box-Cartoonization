@@ -52,6 +52,8 @@
 - Assume you already have NVIDIA GPU and CUDA CuDNN installed 
 - Install tensorflow-gpu, we tested 1.12.0 and 1.13.0rc0 
 - Install scikit-image==0.14.5, other versions may cause problems
+- Directory called **virtualization** contains a file to create a Conda virtual environment that
+ can be used to execute the Python test code
 
 
 ### Inference with Pre-trained Model
