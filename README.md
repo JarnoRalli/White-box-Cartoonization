@@ -52,8 +52,8 @@
 - Assume you already have NVIDIA GPU and CUDA CuDNN installed 
 - Install tensorflow-gpu, we tested 1.12.0 and 1.13.0rc0 
 - Install scikit-image==0.14.5, other versions may cause problems
-- Directory called **virtualization** contains a file to create a Conda virtual environment that
- can be used to execute the Python test code
+- Directory called [virtualization](virtualization/README.md) contains instructions for creating a virtual environment
+ where the code can be tested.
 
 
 ### Inference with Pre-trained Model
@@ -61,6 +61,30 @@
 - Store test images in /test_code/test_images
 - Run /test_code/cartoonize.py
 - Results will be saved in /test_code/cartoonized_images
+
+### Creating a Wheel Package
+
+You can create an installable wheel package, which makes cartoonizing easier. In order to create the package, execute
+the following from the root directory of this repository:
+
+```bash
+python3 -m pip install --upgrade build
+python3 -m build
+```
+
+The package is created in a directory called **dist**. If you're using a virtual environment for executing the code,
+please activate the environment before installing the package:
+
+```bash
+cd dist
+pip3 install whiteboxcartoon-1.0.0-py3-none-any.whl
+```
+
+Once the package is installed, you can call `cartoonize` as follows:
+
+```bash
+cartoonize -i <PATH-TO-IMAGES> -o <PATH-TO-OUTPUT-FOLDER>
+```
 
 
 ### Train

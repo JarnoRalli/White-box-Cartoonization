@@ -1,0 +1,24 @@
+[project]
+name = "whiteboxcartoon"
+version = "1.0.0"
+description = "Learning to Cartoonize using White-box Cartoon Representations"
+readme = "README.md"
+requires-python = ">=3.0"
+license = {text = "Copyright (C) Xinrui Wang All rights reserved. Licensed under the CC BY-NC-SA 4.0"}
+keywords = ["deep-learning", "cartoon", "cartoonize", "cartoonise"]
+
+[project.urls]
+"Homepage" = "https://github.com/SystemErrorWang/White-box-Cartoonization"
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-dir]
+whiteboxcartoon = "test_code"
+
+[tool.setuptools.package-data]
+"whiteboxcartoon.saved_models" = ["*"]
+
+[project.scripts]
+cartoonize = "whiteboxcartoon.__main__:main"

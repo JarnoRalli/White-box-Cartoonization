@@ -2,23 +2,29 @@ import os
 import sys
 import cv2
 import numpy as np
-import tensorflow as tf 
+import tensorflow as tf
 from tqdm import tqdm
 import argparse
-import network
-import guided_filter
+
+if __name__ == '__main__':
+    import network
+    import guided_filter
+else:
+    from . import network
+    from . import guided_filter
+
 
 def path_is_directory(input_string):
     if os.path.isdir(input_string):
         return input_string
     else:
-        raise NotADirectoryError(input_string)
+        raise NotADirectoryError(os.path.abspath(input_string))
 
 def path_exists(input_string):
     if os.path.exists(input_string):
         return input_string
     else:
-        raise FileNotFoundError(input_string)
+        raise FileNotFoundError(os.path.abspath(input_string))
 
 def resize_crop(image):
     h, w, c = np.shape(image)
@@ -87,7 +93,7 @@ def cartoonize(input_path, save_folder, model_path, rho):
         output = cv2.resize(output, (image_shape[1], image_shape[0]))
         cv2.imwrite(file_dict["output_image"], output)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     argParser = argparse.ArgumentParser()
     argParser.add_argument("-m", "--model_path", help="model path", type=path_is_directory, default="saved_models")
     argParser.add_argument("-i", "--input", help="path to a directory or a single image to process", type=path_exists, default="test_images")
